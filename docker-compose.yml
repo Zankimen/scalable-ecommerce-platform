@@ -63,6 +63,7 @@ services:
     environment:
       PORT: 3001
       HOST: 0.0.0.0
+      DATABASE_URL: postgresql://ecommerce:ecommerce@postgres:5432/ecommerce?schema=public
     ports:
       - "3001:3001"
     depends_on:

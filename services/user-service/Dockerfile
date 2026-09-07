@@ -6,6 +6,9 @@ RUN npm install
 COPY tsconfig.base.json ./
 COPY services/user-service/tsconfig.json services/user-service/
 COPY services/user-service/src services/user-service/src
+COPY services/user-service/prisma.config.ts services/user-service/
+COPY services/user-service/prisma services/user-service/prisma
+RUN DATABASE_URL=postgresql://ecommerce:ecommerce@postgres:5432/ecommerce npx prisma generate --config services/user-service/prisma.config.ts
 RUN npm run build:user
 
 FROM node:22-alpine AS runtime
@@ -14,6 +17,7 @@ ENV NODE_ENV=production
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/services/user-service/package*.json services/user-service/
 RUN npm install --omit=dev
+COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 COPY --from=build /app/services/user-service/dist services/user-service/dist
 EXPOSE 3001
 CMD ["npm", "run", "start:user"]
