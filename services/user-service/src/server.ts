@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import { authRoutes } from './routes/auth.js';
+import { userRoutes } from './routes/users.js';
 import { prisma } from './lib/prisma.js';
 
 const app = Fastify({
@@ -13,6 +14,7 @@ app.get('/health', async () => ({
 }));
 
 await app.register(authRoutes);
+await app.register(userRoutes);
 
 const port = Number(process.env.PORT ?? 3001);
 const host = process.env.HOST ?? '0.0.0.0';
