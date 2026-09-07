@@ -1,0 +1,16 @@
+{
+  "name": "scalable-ecommerce-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Educational microservices e-commerce platform",
+  "packageManager": "npm@10",
+  "workspaces": [
+    "services/*"
+  ],
+  "scripts": {
+    "dev:user": "npm --workspace services/user-service run dev",
+    "build:user": "npm --workspace services/user-service run build",
+    "start:user": "npm --workspace services/user-service run start",
+    "test": "npm run test --workspaces --if-present"
+  }
+}
